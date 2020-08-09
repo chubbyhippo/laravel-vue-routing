@@ -5,7 +5,7 @@
         <div class="message" v-for="status in statuses">
           <div class="message-header">
             <p>{{status.user.name}} said...</p>
-            <p>{{postedOn(status)}}</p>
+            <p>{{status.created_at | ago | cap}}</p>
           </div>
 
           <div class="message-body" v-text="status.body"></div>
@@ -22,6 +22,14 @@ export default {
     return {
       statuses: []
     };
+  },
+  filters: {
+    ago(date) {
+      return moment(status.created_at).fromNow();
+    },
+    cap(string) {
+      return string.toUpperCase();
+    }
   },
   mounted() {
     console.log("Component mounted.");
