@@ -9,7 +9,11 @@
 
 <body>
     <div id="app">
-        <example-component></example-component>
+        <router-link to="/" exact>Home</router-link>
+        <router-link to="/about">About</router-link>
+
+        <router-view></router-view>
+
 
     </div>
 
