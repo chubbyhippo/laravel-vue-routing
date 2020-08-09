@@ -1,23 +1,36 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="message" v-for="status in statuses">
+          <div class="message-header">
+            <p>{{status.user.name}} said...</p>
+            <p>{{postedOn(status)}}</p>
+          </div>
 
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
+          <div class="message-body" v-text="status.body"></div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+import moment from "moment";
+export default {
+  data() {
+    return {
+      statuses: []
+    };
+  },
+  mounted() {
+    console.log("Component mounted.");
+    axios.get("/statuses").then(({ data }) => (this.statuses = data));
+  },
+  methods: {
+    postedOn(status) {
+      return moment(status.created_at).fromNow();
     }
+  }
+};
 </script>
