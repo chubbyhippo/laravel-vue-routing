@@ -10,6 +10,7 @@
 
           <div class="message-body" v-text="status.body"></div>
         </div>
+        <add-to-stream @completed="addStatus"></add-to-stream>
       </div>
     </div>
   </div>
@@ -17,7 +18,11 @@
 
 <script>
 import moment from "moment";
+import AddToStream from "./AddToStream.vue";
 export default {
+  components: {
+    AddToStream
+  },
   data() {
     return {
       statuses: []
@@ -36,8 +41,14 @@ export default {
     axios.get("/statuses").then(({ data }) => (this.statuses = data));
   },
   methods: {
-    postedOn(status) {
-      return moment(status.created_at).fromNow();
+    addStatus(status) {
+      console.log(status);
+      this.statuses.unshift(status);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
     }
   }
 };
